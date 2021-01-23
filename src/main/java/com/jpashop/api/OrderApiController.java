@@ -10,6 +10,7 @@ import com.jpashop.repository.order.query.OrderFlatDto;
 import com.jpashop.repository.order.query.OrderItemQueryDto;
 import com.jpashop.repository.order.query.OrderQueryDto;
 import com.jpashop.repository.order.query.OrderQueryRepository;
+import com.jpashop.service.query.OrderQueryServcie;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,8 @@ public class OrderApiController {
 
     private final OrderRepository orderRepository;
     private final OrderQueryRepository orderQueryRepository;
+
+    private final OrderQueryServcie orderQueryServcie;
 
     // 엔티티 직접노출
     @GetMapping("/api/v1/orders")
@@ -61,13 +64,7 @@ public class OrderApiController {
 
     @GetMapping("/api/v3/orders")
     public List<OrderDto> orderV3(){
-        List<Order> orders = orderRepository.findAllWithItem();
-
-        List<OrderDto> collect = orders.stream()
-                .map(o -> new OrderDto(o))
-                .collect(toList());
-
-        return collect;
+        return orderQueryServcie.orderV3();
     }
 
 
@@ -113,7 +110,7 @@ public class OrderApiController {
     }
 
     @Getter
-    static class OrderDto {
+    public static class OrderDto {
 
         private Long orderId;
         private String name;
