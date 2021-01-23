@@ -3,14 +3,14 @@ package com.jpashop.repository.order.query;
 import com.jpashop.domain.Address;
 import com.jpashop.domain.OrderStatus;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@EqualsAndHashCode(of = "orderId")
-public class OrderQueryDto {
+public class OrderFlatDto {
+
     private Long orderId;
     private String name;
     private LocalDateTime orderDate;
@@ -18,23 +18,20 @@ public class OrderQueryDto {
     private Address address;
     private List<OrderItemQueryDto> orderItems;
 
-    public OrderQueryDto(Long orderId, String name, LocalDateTime orderDate, OrderStatus orderStatus, Address address) {
+    private String itemName;
+    private int orderPrice;
+    private int count;
 
-        this.orderId = orderId;
-        this.name = name;
-        this.orderDate = orderDate;
-        this.orderStatus = orderStatus;
-        this.address = address;
-    }
+    public OrderFlatDto(Long orderId, String name, LocalDateTime orderDate, OrderStatus orderStatus, Address address, List<OrderItemQueryDto> orderItems, String itemName, int orderPrice, int count) {
 
-    public OrderQueryDto(Long orderId, String name, LocalDateTime orderDate, OrderStatus orderStatus, Address address, List<OrderItemQueryDto> orderItems) {
         this.orderId = orderId;
         this.name = name;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
         this.address = address;
         this.orderItems = orderItems;
+        this.itemName = itemName;
+        this.orderPrice = orderPrice;
+        this.count = count;
     }
-
-
 }
